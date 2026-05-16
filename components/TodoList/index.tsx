@@ -1,19 +1,19 @@
 "use client"
 
-import React, { useState, useEffect }  from "react"
+import React, { useState }  from "react"
 import { v4 as uuidv4 } from 'uuid';
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-import { TodoItem, TodoItemData, TodoItemProps } from "@/components/TodoItem";
+import { TodoItem, TodoItemData } from "@/components/TodoItem";
 
 function TodoList() {
   const [todos, setTodos] = useState<TodoItemData[]>([]);
   const [newTodo, setNewTodo] = useState("");
   const [selectedFilter, setSelectedFilter] = useState<"all" | "pending" | "completed">("all");
 
-  const handleAddTodo = (e: any) => {
+  const handleAddTodo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (newTodo.trim() === "") return;
 
@@ -28,7 +28,7 @@ function TodoList() {
     setNewTodo("");
   }
 
-  const onAddTodoChange = (e: any) => {
+  const onAddTodoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewTodo(e.target.value);
   }
 
