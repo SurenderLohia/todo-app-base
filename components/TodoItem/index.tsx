@@ -26,4 +26,4 @@ function TodoItem(props: TodoItemProps) {
   );
 }
 
-export default TodoItem;
+export { TodoItem, TodoItemProps };
