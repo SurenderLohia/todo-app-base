@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState }  from "react"
+import React, { useState, useEffect }  from "react"
 import { v4 as uuidv4 } from 'uuid';
 
 import { Input } from "@/components/ui/input";
@@ -13,7 +13,12 @@ function TodoList() {
   const [newTodo, setNewTodo] = useState("");
   const [selectedFilter, setSelectedFilter] = useState<"all" | "pending" | "completed">("all");
 
-  const handleAddTodo = (e: React.ChangeEvent<HTMLFormElement>) => {
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const handleAddTodo = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (newTodo.trim() === "") return;
 
@@ -46,7 +51,10 @@ function TodoList() {
       if (todo.id === id) {
         return { ...todo, mode: 'edit' };
       }
-      return todo;
+      return {
+        ...todo,
+        mode: 'view',
+      };
     }));
   }
 
@@ -86,6 +94,8 @@ function TodoList() {
     return true;
   });
 
+  if (!isMounted) return null;
+  
   return (
     <div className="flex flex-col w-full gap-4">
       <form className="flex gap-1 w-full" onSubmit={handleAddTodo}>
