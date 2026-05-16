@@ -20,6 +20,7 @@ function TodoList() {
       id: uuidv4(),
       text: newTodo,
       isCompleted: false,
+      mode: 'view',
     };
 
     setTodos([...todos, newTodoItem]);
@@ -39,6 +40,33 @@ function TodoList() {
     }));
   }
 
+  const openTodoItemEditMode = (id: string) => {
+    setTodos(todos.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, mode: 'edit' };
+      }
+      return todo;
+    }));
+  }
+
+  const closeTodoItemEditMode = (id: string) => {
+    setTodos(todos.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, mode: 'view' };
+      }
+      return todo;
+    }));
+  }
+
+  const updateTodoItemText = (id: string, newText: string) => {
+    setTodos(todos.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, text: newText, mode: 'view' };
+      }
+      return todo;
+    }));
+  }
+
   return (
     <>
       <form className="flex gap-1 w-full my-4" onSubmit={handleAddTodo}>
@@ -52,6 +80,10 @@ function TodoList() {
           text={todo.text}
           isCompleted={todo.isCompleted}
           toggleTodoItemComplete={toggleTodoItemComplete}
+          mode={todo.mode}
+          openTodoItemEditMode={openTodoItemEditMode}
+          updateTodoItemText={updateTodoItemText}
+          closeTodoItemEditMode={closeTodoItemEditMode}
         />
       ))}
     </>
