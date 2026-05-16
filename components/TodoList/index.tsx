@@ -11,6 +11,7 @@ import { TodoItem, TodoItemData, TodoItemProps } from "@/components/TodoItem";
 function TodoList() {
   const [todos, setTodos] = useState<TodoItemData[]>([]);
   const [newTodo, setNewTodo] = useState("");
+  const [selectedFilter, setSelectedFilter] = useState<"all" | "pending" | "completed">("all");
 
   const handleAddTodo = (e: any) => {
     e.preventDefault();
@@ -76,6 +77,15 @@ function TodoList() {
   const pendingCount = todos.filter(todo => !todo.isCompleted).length;
   const completedCount = todos.filter(todo => todo.isCompleted).length;
 
+  const filteredTodos = todos.filter(todo => {
+    if (selectedFilter === "pending") {
+      return !todo.isCompleted;
+    } else if (selectedFilter === "completed") {
+      return todo.isCompleted;
+    }
+    return true;
+  });
+
   return (
     <div className="flex flex-col w-full gap-4">
       <form className="flex gap-1 w-full" onSubmit={handleAddTodo}>
@@ -83,12 +93,18 @@ function TodoList() {
         <Button type="submit" variant="secondary">Add</Button>
       </form>
       <div className="flex gap-3">
-        <Button size="sm" variant="outline">All({allCount})</Button>
-        <Button size="sm" variant="outline">Pending({pendingCount})</Button>
-        <Button size="sm" variant="outline">Completed({completedCount})</Button>
+        <Button size="sm" variant={selectedFilter === "all" ? "default" : "outline"} onClick={() => setSelectedFilter("all")}>
+          All({allCount})
+        </Button>
+        <Button size="sm" variant={selectedFilter === "pending" ? "default" : "outline"} onClick={() => setSelectedFilter("pending")}>
+          Pending({pendingCount})
+        </Button>
+        <Button size="sm" variant={selectedFilter === "completed" ? "default" : "outline"} onClick={() => setSelectedFilter("completed")}>
+          Completed({completedCount})
+        </Button>
       </div>
       <div className="flex flex-col gap-1">
-        {todos.map((todo) => (
+        {filteredTodos.map((todo) => (
           <TodoItem 
             key={todo.id} 
             id={todo.id} 
