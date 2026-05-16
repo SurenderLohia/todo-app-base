@@ -7,22 +7,20 @@ interface TodoItemData  {
   isCompleted: boolean,
   id: string,
 }
-
-interface TodoItemProps  {
-  text: string,
-  isCompleted: boolean,
-  id: string,
-  toggleComplete: (id: string) => void,
+interface TodoItemProps extends TodoItemData {
+  toggleTodoItemComplete: (id: string) => void,
 }
 
-
-
 function TodoItem(props: TodoItemProps) {
-  const {id, text, isCompleted, toggleComplete} = props;
+  const {id, text, isCompleted, toggleTodoItemComplete} = props;
 
   return (
     <div key={id} className="flex gap-1 w-full items-center">
-      <input type="checkbox" checked={isCompleted} onChange={() => toggleComplete(id)} />
+      <input 
+        type="checkbox" 
+        checked={isCompleted} 
+        onChange={() => toggleTodoItemComplete(id)}
+      />
       <div className="flex-1">
         {text}
       </div>

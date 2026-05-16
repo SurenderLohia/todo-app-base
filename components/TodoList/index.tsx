@@ -30,7 +30,7 @@ function TodoList() {
     setNewTodo(e.target.value);
   }
 
-  const toggleComplete = (id: string) => {
+  const toggleTodoItemComplete = (id: string) => {
     setTodos(todos.map((todo) => {
       if (todo.id === id) {
         return { ...todo, isCompleted: !todo.isCompleted };
@@ -51,7 +51,7 @@ function TodoList() {
           id={todo.id} 
           text={todo.text}
           isCompleted={todo.isCompleted}
-          toggleComplete={toggleComplete}
+          toggleTodoItemComplete={toggleTodoItemComplete}
         />
       ))}
     </>
