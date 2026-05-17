@@ -1,6 +1,7 @@
 {
   "name": "todo-app",
   "version": "0.1.0",
+  "author": "Surender Lohia",
   "private": true,
   "scripts": {
     "dev": "next dev",
